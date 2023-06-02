@@ -3,9 +3,13 @@ import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import addContentData from '../../../redux/thunk/addContentData';
 
 const AddContent = () => {
 	const { register, handleSubmit } = useForm();
+
+	const dispatch = useDispatch();
 
 	const [tags, setTags] = useState([]);
 
@@ -16,7 +20,7 @@ const AddContent = () => {
 			description: data.description,
 			tags,
 		};
-		console.log(contentData);
+		dispatch(addContentData(contentData));
 	};
 
 	return (
