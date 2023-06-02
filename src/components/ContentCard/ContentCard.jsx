@@ -1,9 +1,12 @@
+import { format } from 'date-fns';
 import React from 'react';
 
 const ContentCard = ({ content }) => {
 	const { title, image, description, tags, createdAt } = content;
 
 	const activeClass = 'bg-purple-100 text-purple-700';
+
+	const addedDate = format(new Date(createdAt), 'PPpp');
 
 	return (
 		<div>
@@ -16,17 +19,19 @@ const ContentCard = ({ content }) => {
 				<div className="p-6">
 					<header className="mb-4">
 						<h3 className="text-xl font-medium text-slate-700">{title}</h3>
-						<p className="text-sm text-slate-400"> By George, jun 3 2023</p>
-						<div className="space-x-4 my-4">
+						<p className="text-sm text-slate-500"> {addedDate}</p>
+						<div className="space-x-4 my-4 flex flex-wrap">
 							{tags.map((tag, idx) => (
-								<button key={idx} className="whitespace-nowrap rounded-full border px-2.5 py-0.5 text-sm ">
+								<button
+									key={idx}
+									className="whitespace-nowrap rounded-full border px-2.5 py-0.5 text-sm ">
 									{tag}
 								</button>
 							))}
 						</div>
 					</header>
 					<p>
-						{description.length > 100 ? `${description.substring(0, 120)} ...` : description}{' '}
+						{description.length > 100 ? `${description.substring(0, 100)} ...` : description}{' '}
 						{description.length > 100 && <button className="text-indigo-700">Read more</button>}{' '}
 					</p>
 				</div>

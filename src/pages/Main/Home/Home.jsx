@@ -9,6 +9,7 @@ import {
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ContentCard from '../../../components/ContentCard/ContentCard';
+import { toggleUpload } from '../../../redux/actions/filterActions';
 import getContentData from '../../../redux/thunk/getContentData';
 
 const theme = createTheme({
@@ -24,10 +25,11 @@ const Home = () => {
 	let content;
 
 	const contents = useSelector((state) => state.content.contents);
+	const uploadFilters = useSelector((state) => state.filter.filters.uploadFilters);
 
 	useEffect(() => {
 		dispatch(getContentData());
-	}, [dispatch]);
+	}, [dispatch, uploadFilters]);
 
 	if (contents.length) {
 		content = contents.map((content) => <ContentCard key={content._id} content={content} />);
@@ -48,18 +50,18 @@ const Home = () => {
 							variant="outlined"
 							className="custom-addUser-input w-[200px]  h-[60px] "
 							sx={{ textAlign: 'left' }}>
-							<MenuItem onClick={() => console.log('lastUpload')} value={'lastUpload'}>
-								Last Upload
-							</MenuItem>
-							<MenuItem onClick={() => console.log('firstUpload')} value={'firstUpload'}>
+							<MenuItem onClick={() => dispatch(toggleUpload('firstUpload'))} value={'firstUpload'}>
 								First Upload
+							</MenuItem>
+							<MenuItem onClick={() => dispatch(toggleUpload('lastUpload'))} value={'lastUpload'}>
+								Last Upload
 							</MenuItem>
 						</Select>
 					</FormControl>
 				</ThemeProvider>
 			</div>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14">{content}</div>
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14">{content}</div>
 		</div>
 	);
 };
