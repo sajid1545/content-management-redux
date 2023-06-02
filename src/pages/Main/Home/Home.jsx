@@ -6,7 +6,10 @@ import {
 	ThemeProvider,
 	createTheme,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import ContentCard from '../../../components/ContentCard/ContentCard';
+import getContentData from '../../../redux/thunk/getContentData';
 
 const theme = createTheme({
 	palette: {
@@ -17,9 +20,23 @@ const theme = createTheme({
 });
 
 const Home = () => {
+	const dispatch = useDispatch();
+	let content;
+
+	const contents = useSelector((state) => state.content.contents);
+
+	useEffect(() => {
+		dispatch(getContentData());
+	}, [dispatch]);
+
+	if (contents.length) {
+		content = contents.map((content) => <ContentCard key={content._id} content={content} />);
+	}
+
 	return (
 		<div className="max-w-7xl gap-14 mx-auto my-10">
-			<div className=" flex justify-end">
+			{/* Filter Field */}
+			<div className=" flex justify-end mb-10">
 				<ThemeProvider theme={theme}>
 					<FormControl>
 						<InputLabel id="demo-simple-select-label">Filter</InputLabel>
@@ -41,6 +58,8 @@ const Home = () => {
 					</FormControl>
 				</ThemeProvider>
 			</div>
+
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14">{content}</div>
 		</div>
 	);
 };

@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import addContentData from '../../../redux/thunk/addContentData';
 
 const AddContent = () => {
-	const { register, handleSubmit } = useForm();
+	const { register, handleSubmit,reset } = useForm();
 
 	const dispatch = useDispatch();
 
@@ -21,13 +21,14 @@ const AddContent = () => {
 			tags,
 		};
 		dispatch(addContentData(contentData));
+		reset()
 	};
 
 	return (
 		<div className="flex justify-center items-center h-full">
 			<form
 				onSubmit={handleSubmit(submit)}
-				className="shadow-lg p-10 rounded-md flex flex-wrap gap-3 max-w-5xl justify-between bg-white">
+				className="shadow-lg p-10 rounded-md flex flex-wrap gap-3 w-full  max-w-5xl justify-between bg-white">
 				<div className="flex flex-col w-full">
 					<label className="mb-2" htmlFor="title">
 						Title
@@ -74,6 +75,7 @@ const AddContent = () => {
 					</label>
 					<Autocomplete
 						multiple
+						fullWidth
 						onChange={(event, newValue) => {
 							setTags(newValue);
 						}}

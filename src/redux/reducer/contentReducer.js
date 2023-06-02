@@ -1,4 +1,4 @@
-import { ADD_CONTENT } from '../actionTypes/actionTypes';
+import { ADD_CONTENT, GET_CONTENT } from '../actionTypes/actionTypes';
 
 const initialState = {
 	contents: [],
@@ -11,6 +11,12 @@ const contentReducer = (state = initialState, action) => {
 			return {
 				...state,
 				contents: [...state.contents, action.payload],
+			};
+
+		case GET_CONTENT:
+			return {
+				...state,
+				contents: action.payload,
 			};
 
 		default:
