@@ -26,10 +26,15 @@ const Home = () => {
 
 	const contents = useSelector((state) => state.content.contents);
 	const uploadFilters = useSelector((state) => state.filter.filters.uploadFilters);
+	const loading = useSelector((state) => state.content.loading);
 
 	useEffect(() => {
 		dispatch(getContentData());
 	}, [dispatch, uploadFilters]);
+
+	if (loading === true) {
+		<h1 className="">LOADING</h1>;
+	}
 
 	if (contents.length) {
 		content = contents.map((content) => <ContentCard key={content._id} content={content} />);

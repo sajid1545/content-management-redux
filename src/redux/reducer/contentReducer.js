@@ -1,8 +1,9 @@
-import { ADD_CONTENT, GET_CONTENT } from '../actionTypes/actionTypes';
+import { ADD_CONTENT, GET_CONTENT, TOGGLE_LOADING } from '../actionTypes/actionTypes';
 
 const initialState = {
 	contents: [],
 	historyCart: [],
+	loading: false,
 };
 
 const contentReducer = (state = initialState, action) => {
@@ -17,6 +18,12 @@ const contentReducer = (state = initialState, action) => {
 			return {
 				...state,
 				contents: action.payload,
+			};
+
+		case TOGGLE_LOADING:
+			return {
+				...state,
+				loading: action.payload,
 			};
 
 		default:
