@@ -1,9 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Dashboard from '../../Layout/DashboardLayout/Dashboard';
 import MainLayout from '../../Layout/Main/MainLayout';
+import AddContent from '../../pages/Dashboard/AddContent/AddContent';
+import ContentList from '../../pages/Dashboard/ContentList/ContentList';
 import Home from '../../pages/Main/Home/Home';
 import ReadingHistory from '../../pages/Main/ReadingHistory/ReadingHistory';
-import AddContent from '../../pages/Dashboard/AddContent/AddContent';
 
 export const route = createBrowserRouter([
 	{
@@ -26,9 +27,13 @@ export const route = createBrowserRouter([
 		element: <Dashboard />,
 		children: [
 			{
-				path:'/dashboard/add-content',
-				element: <AddContent/>
-			}
+				path: '/dashboard',
+				element: <ContentList />,
+			},
+			{
+				path: '/dashboard/add-content',
+				element: <AddContent />,
+			},
 		],
 	},
 ]);
