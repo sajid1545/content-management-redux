@@ -9,3 +9,4 @@ export const TOGGLE_LOADING = 'TOGGLE_LOADING';
 // Filters
 
 export const TOGGLE_UPLOAD = 'TOGGLE_UPLOAD';
+export const TOGGLE_TAG = 'TOGGLE_TAG';

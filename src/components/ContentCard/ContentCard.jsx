@@ -1,12 +1,16 @@
 import { format } from 'date-fns';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleTag } from '../../redux/actions/filterActions';
 
 const ContentCard = ({ content }) => {
 	const { title, image, description, tags, createdAt } = content;
 
 	const activeClass = 'bg-purple-100 text-purple-700';
-
 	const addedDate = format(new Date(createdAt), 'PPpp');
+	const dispatch = useDispatch();
+
+	const tagFilters = useSelector((state) => state.filter.filters.tagFilters);
 
 	return (
 		<div>
@@ -24,7 +28,10 @@ const ContentCard = ({ content }) => {
 							{tags.map((tag, idx) => (
 								<button
 									key={idx}
-									className="whitespace-nowrap rounded-full border px-2.5 py-0.5 text-sm ">
+									onClick={() => dispatch(toggleTag(tag))}
+									className={`whitespace-nowrap rounded-full border px-2.5 py-0.5 text-sm ${
+										tagFilters.includes(tag) ? activeClass : ''
+									}`}>
 									{tag}
 								</button>
 							))}

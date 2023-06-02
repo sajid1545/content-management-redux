@@ -27,6 +27,7 @@ const Home = () => {
 	const contents = useSelector((state) => state.content.contents);
 	const uploadFilters = useSelector((state) => state.filter.filters.uploadFilters);
 	const loading = useSelector((state) => state.content.loading);
+	const tagFilters = useSelector((state) => state.filter.filters.tagFilters);
 
 	useEffect(() => {
 		dispatch(getContentData());
@@ -38,6 +39,17 @@ const Home = () => {
 
 	if (contents.length) {
 		content = contents.map((content) => <ContentCard key={content._id} content={content} />);
+	}
+
+	if (contents.length && tagFilters.length) {
+		content = contents
+			.filter((content) => {
+				if (tagFilters.length) {
+					return tagFilters.every((tag) => content.tags.includes(tag));
+				}
+				return content;
+			})
+			.map((content) => <ContentCard key={content._id} content={content} />);
 	}
 
 	return (
