@@ -5,6 +5,7 @@ export const ADD_CONTENT = 'ADD_CONTENT';
 export const UPDATE_CONTENT = 'UPDATE_CONTENT';
 export const DELETE_CONTENT = 'DELETE_CONTENT';
 export const TOGGLE_LOADING = 'TOGGLE_LOADING';
+export const ADD_TO_HISTORY_CART = "ADD_TO_HISTORY_CART"
 
 // Filters
 

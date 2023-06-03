@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleTag } from '../../redux/actions/filterActions';
+import { addToHistoryCart } from '../../redux/actions/contentActions';
 
 const ContentCard = ({ content }) => {
 	const { title, image, description, tags, createdAt } = content;
@@ -14,7 +15,7 @@ const ContentCard = ({ content }) => {
 
 	return (
 		<div>
-			<div className="overflow-hidden  bg-white  shadow-slate-200 shadow-lg relative rounded-3xl border p-3 flex flex-col text-indigo-900">
+			<div className="overflow-hidden  bg-white  shadow-slate-200 shadow-xl hover:shadow-none duration-700 relative rounded-3xl border p-3 flex flex-col text-indigo-900">
 				{/*  <!-- Image --> */}
 				<figure>
 					<img src={image} alt="card" className="aspect-video w-full" />
@@ -39,7 +40,13 @@ const ContentCard = ({ content }) => {
 					</header>
 					<p>
 						{description.length > 100 ? `${description.substring(0, 100)} ...` : description}{' '}
-						{description.length > 100 && <button className="text-indigo-700">Read more</button>}{' '}
+						{description.length > 100 && (
+							<button
+								onClick={() => dispatch(addToHistoryCart(content))}
+								className="text-indigo-700">
+								Read more
+							</button>
+						)}{' '}
 					</p>
 				</div>
 			</div>

@@ -1,4 +1,9 @@
-import { ADD_CONTENT, GET_CONTENT, TOGGLE_LOADING } from '../actionTypes/actionTypes';
+import {
+	ADD_CONTENT,
+	ADD_TO_HISTORY_CART,
+	GET_CONTENT,
+	TOGGLE_LOADING,
+} from '../actionTypes/actionTypes';
 
 export const addContent = (content) => {
 	return {
@@ -17,6 +22,13 @@ export const getContent = (content) => {
 export const toggleLoading = (data) => {
 	return {
 		type: TOGGLE_LOADING,
+		payload: data,
+	};
+};
+
+export const addToHistoryCart = (data) => {
+	return {
+		type: ADD_TO_HISTORY_CART,
 		payload: data,
 	};
 };
