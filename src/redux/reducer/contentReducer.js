@@ -32,9 +32,23 @@ const contentReducer = (state = initialState, action) => {
 			};
 
 		case ADD_TO_HISTORY_CART:
+			const selectedContent = state.historyCart.find(
+				(content) => content._id === action.payload._id
+			);
+
+			if (selectedContent) {
+				const newCart = state.historyCart.filter((content) => content._id !== action.payload._id);
+				selectedContent.quantity = selectedContent.quantity + 1;
+
+				return {
+					...state,
+					historyCart: [...newCart, selectedContent],
+				};
+			}
+
 			return {
 				...state,
-				historyCart: [...state.historyCart, action.payload],
+				historyCart: [...state.historyCart, { ...action.payload, quantity: 1 }],
 			};
 
 		default:
