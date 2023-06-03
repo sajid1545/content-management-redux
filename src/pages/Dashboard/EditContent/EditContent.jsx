@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import updateContentData from '../../../redux/thunk/updateContentData';
 
 const EditContent = () => {
 	const { register, handleSubmit, reset } = useForm();
@@ -14,9 +15,9 @@ const EditContent = () => {
 	const contentID = location.state._id;
 	const contents = useSelector((state) => state.content.contents);
 
-	const editableContent = contents.find((content) => content._id === contentID);
-
-	const { title, image, tags, description } = editableContent;
+    const editableContent = contents.find((content) => content._id === contentID);
+    
+	const { title, image, tags, description, _id } = editableContent;
 
 	const [newTags, setNewTags] = useState(tags);
 
@@ -27,7 +28,7 @@ const EditContent = () => {
 			description: data.description,
 			tags: newTags,
 		};
-		console.log(contentData);
+		dispatch(updateContentData(contentData, _id));
 	};
 
 	return (

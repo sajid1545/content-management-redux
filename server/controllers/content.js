@@ -45,8 +45,20 @@ const updateContent = async (req, res) => {
 	}
 };
 
+const deleteContent = async (req, res) => {
+	try {
+		const id = req.params.id;
+		const result = await Content.findByIdAndDelete(id);
+		res.send({ status: 'success', result });
+	} catch (error) {
+		console.log(error);
+		res.send({ status: 'error', error: error.message });
+	}
+};
+
 module.exports = {
 	addContent,
 	getContents,
 	updateContent,
+	deleteContent
 };

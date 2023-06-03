@@ -1,9 +1,18 @@
 import {
 	ADD_CONTENT,
 	ADD_TO_HISTORY_CART,
+	DELETE_CONTENT,
 	GET_CONTENT,
 	TOGGLE_LOADING,
+	UPDATE_CONTENT,
 } from '../actionTypes/actionTypes';
+
+export const getContent = (content) => {
+	return {
+		type: GET_CONTENT,
+		payload: content,
+	};
+};
 
 export const addContent = (content) => {
 	return {
@@ -12,10 +21,17 @@ export const addContent = (content) => {
 	};
 };
 
-export const getContent = (content) => {
+export const updateContent = (content) => {
 	return {
-		type: GET_CONTENT,
+		type: UPDATE_CONTENT,
 		payload: content,
+	};
+};
+
+export const deleteContent = (id) => {
+	return {
+		type: DELETE_CONTENT,
+		payload: id,
 	};
 };
 

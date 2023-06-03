@@ -1,9 +1,11 @@
+import { Tooltip } from '@mui/material';
 import { format } from 'date-fns';
 import React, { useEffect } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import deleteContentData from '../../../redux/thunk/deleteContentData';
 import getContentData from '../../../redux/thunk/getContentData';
 
 const ContentList = () => {
@@ -65,14 +67,19 @@ const ContentList = () => {
 										</td>
 										<td className="h-12 px-6 text-sm transition duration-300 border-t border-l first:border-l-0 border-slate-200 stroke-slate-500 text-slate-500 ">
 											<div className="flex justify-center gap-3 items-center">
-												<Link to={'/dashboard/edit-content'} state={{ _id }}>
-													<button title="Edit">
-														<AiOutlineEdit className="w-8 h-8 hover:text-blue-600 rounded-full hover:bg-gray-100 p-1" />
+												<Tooltip arrow title="Edit">
+													<Link to={'/dashboard/edit-content'} state={{ _id }}>
+														<button title="Edit">
+															<AiOutlineEdit className="w-8 h-8 hover:text-blue-600 rounded-full hover:bg-gray-100 p-1" />
+														</button>
+													</Link>
+												</Tooltip>
+
+												<Tooltip arrow title="Delete">
+													<button onClick={() => dispatch(deleteContentData(_id))}>
+														<BsFillTrashFill className="w-8 h-8 hover:text-red-600 rounded-full hover:bg-gray-100 p-1" />
 													</button>
-												</Link>
-												<button title="Delete">
-													<BsFillTrashFill className="w-8 h-8 hover:text-red-600 rounded-full hover:bg-gray-100 p-1" />
-												</button>
+												</Tooltip>
 											</div>
 										</td>
 									</tr>

@@ -1,9 +1,10 @@
+import { Tooltip } from '@mui/material';
 import { format } from 'date-fns';
 import React from 'react';
+import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleTag } from '../../redux/actions/filterActions';
 import { addToHistoryCart } from '../../redux/actions/contentActions';
-import { Tooltip } from '@mui/material';
+import { toggleTag } from '../../redux/actions/filterActions';
 
 const ContentCard = ({ content }) => {
 	const { title, image, description, tags, createdAt } = content;
@@ -39,17 +40,26 @@ const ContentCard = ({ content }) => {
 							))}
 						</div>
 					</header>
+					<p className="">
+						<span className="w-[70%]">
+							{description.length > 100 ? `${description.substring(0, 120)}...` : description}{' '}
+						</span>
+					</p>
 					<p>
-						{description.length > 100 ? `${description.substring(0, 100)} ...` : description}{' '}
-						{description.length > 100 && (
-							<Tooltip title="Add to reading History by clicking on this button" arrow>
-								<button
-									onClick={() => dispatch(addToHistoryCart(content))}
-									className="text-indigo-700">
-									Read more
-								</button>
-							</Tooltip>
-						)}{' '}
+						<span>
+							{description.length > 100 && (
+								<Tooltip title="Add to reading History by clicking on this button" arrow>
+									<button
+										onClick={() => {
+											dispatch(addToHistoryCart(content));
+											toast.success(`${title} read`);
+										}}
+										className="bg-indigo-700 border-2 border-indigo-700 p-1 rounded-md mt-5 w-full text-white font-bold text-md hover:bg-white hover:text-black duration-500">
+										Read more
+									</button>
+								</Tooltip>
+							)}{' '}
+						</span>
 					</p>
 				</div>
 			</div>

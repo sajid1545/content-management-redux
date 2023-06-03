@@ -1,9 +1,10 @@
 const express = require('express');
-const { addContent, getContents, updateContent } = require('../controllers/content');
+const { addContent, getContents, updateContent, deleteContent } = require('../controllers/content');
 const router = express.Router();
 
-router.post('/', addContent);
 router.get('/', getContents);
+router.post('/', addContent);
 router.patch('/:id', updateContent);
+router.delete('/:id', deleteContent);
 
 module.exports = router;

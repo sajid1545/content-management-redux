@@ -1,8 +1,10 @@
 import {
 	ADD_CONTENT,
 	ADD_TO_HISTORY_CART,
+	DELETE_CONTENT,
 	GET_CONTENT,
 	TOGGLE_LOADING,
+	UPDATE_CONTENT,
 } from '../actionTypes/actionTypes';
 
 const initialState = {
@@ -13,16 +15,29 @@ const initialState = {
 
 const contentReducer = (state = initialState, action) => {
 	switch (action.type) {
+		case GET_CONTENT:
+			return {
+				...state,
+				contents: action.payload,
+			};
+
 		case ADD_CONTENT:
 			return {
 				...state,
 				contents: [...state.contents, action.payload],
 			};
 
-		case GET_CONTENT:
+		case UPDATE_CONTENT:
+			const restProducts = state.contents.filter((content) => content._id !== action.payload._id);
 			return {
 				...state,
-				contents: action.payload,
+				contents: [restProducts, action.payload],
+			};
+
+		case DELETE_CONTENT:
+			return {
+				...state,
+				contents: state.contents.filter((content) => content._id !== action.payload),
 			};
 
 		case TOGGLE_LOADING:
