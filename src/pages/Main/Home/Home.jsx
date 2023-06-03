@@ -34,7 +34,11 @@ const Home = () => {
 	}, [dispatch, uploadFilters]);
 
 	if (loading === true) {
-		<h1 className="">LOADING</h1>;
+		content = (
+			<div className="h-screen flex justify-center items-center">
+				<div class="spinner place-items-center"></div>
+			</div>
+		);
 	}
 
 	if (contents.length) {
