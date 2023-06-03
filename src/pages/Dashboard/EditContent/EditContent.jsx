@@ -3,25 +3,31 @@ import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import addContentData from '../../../redux/thunk/addContentData';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
-const AddContent = () => {
+const EditContent = () => {
 	const { register, handleSubmit, reset } = useForm();
 
 	const dispatch = useDispatch();
+	const location = useLocation();
+	const contentID = location.state._id;
+	const contents = useSelector((state) => state.content.contents);
 
-	const [tags, setTags] = useState([]);
+	const editableContent = contents.find((content) => content._id === contentID);
+
+	const { title, image, tags, description } = editableContent;
+
+	const [newTags, setNewTags] = useState(tags);
 
 	const submit = (data) => {
 		const contentData = {
 			title: data.title,
 			image: data.image,
 			description: data.description,
-			tags,
+			tags: newTags,
 		};
-		dispatch(addContentData(contentData));
-		reset();
+		console.log(contentData);
 	};
 
 	return (
@@ -33,13 +39,13 @@ const AddContent = () => {
 					<label className="mb-2" htmlFor="title">
 						Title
 					</label>
-					<input type="text" id="title" {...register('title')} />
+					<input defaultValue={title} type="text" id="title" {...register('title')} />
 				</div>
 				<div className="flex flex-col w-full">
 					<label className="mb-2" htmlFor="image">
 						Image
 					</label>
-					<input type="text" name="image" id="image" {...register('image')} />
+					<input defaultValue={image} type="text" name="image" id="image" {...register('image')} />
 				</div>
 
 				<div className="w-full">
@@ -50,9 +56,10 @@ const AddContent = () => {
 						multiple
 						fullWidth
 						onChange={(event, newValue) => {
-							setTags(newValue);
+							setNewTags(newValue);
 						}}
 						id="tags-filled"
+						defaultValue={tags.map((tag) => tag)}
 						options={[]}
 						sx={{ mt: 2 }}
 						freeSolo
@@ -76,6 +83,7 @@ const AddContent = () => {
 						id="description"
 						cols="30"
 						rows="5"
+						defaultValue={description}
 						{...register('description')}></textarea>
 				</div>
 				<div className="flex justify-between items-center w-full">
@@ -90,4 +98,4 @@ const AddContent = () => {
 	);
 };
 
-export default AddContent;
+export default EditContent;

@@ -33,8 +33,20 @@ const getContents = async (req, res) => {
 	}
 };
 
+const updateContent = async (req, res) => {
+	try {
+		const id = req.params.id;
+		const content = req.body;
+		const result = await Content.findByIdAndUpdate(id, content);
+		res.send({ status: 'success', result });
+	} catch (error) {
+		console.log(error);
+		res.send({ status: 'error', error: error.message });
+	}
+};
+
 module.exports = {
 	addContent,
 	getContents,
+	updateContent,
 };
-

@@ -3,6 +3,7 @@ import Dashboard from '../../Layout/DashboardLayout/Dashboard';
 import MainLayout from '../../Layout/Main/MainLayout';
 import AddContent from '../../pages/Dashboard/AddContent/AddContent';
 import ContentList from '../../pages/Dashboard/ContentList/ContentList';
+import EditContent from '../../pages/Dashboard/EditContent/EditContent';
 import Home from '../../pages/Main/Home/Home';
 import ReadingHistory from '../../pages/Main/ReadingHistory/ReadingHistory';
 
@@ -33,6 +34,10 @@ export const route = createBrowserRouter([
 			{
 				path: '/dashboard/add-content',
 				element: <AddContent />,
+			},
+			{
+				path: '/dashboard/edit-content',
+				element: <EditContent />,
 			},
 		],
 	},
