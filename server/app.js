@@ -13,12 +13,11 @@ app.use(cors());
 // middleware to set router
 
 app.use('/api/v1/content', require('./routes/content'));
-
+app.use('/api/v1/auth', require('./routes/auth'));
 
 app.get('/', (req, res) => {
 	res.send('Content app server  is working');
 });
-
 
 const start = async () => {
 	try {
