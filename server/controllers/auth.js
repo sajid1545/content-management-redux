@@ -6,7 +6,7 @@ const register = async (req, res) => {
 	const { name, email, password } = req.body;
 
 	const duplicate = await User.findOne({ email });
-	if (duplicate) return res.status(400).send({ message: 'Email already exists' });
+	if (duplicate) return res.status(400).send('Email already exists');
 
 	try {
 		const hashedPassword = await bcrypt.hash(password, 10);
@@ -26,8 +26,15 @@ const register = async (req, res) => {
 		res.status(201).send({ message: 'User created successfully', result });
 	} catch (error) {
 		console.log(error);
+		res.status(400).send({ message: error.message });
 	}
 };
+
+
+const login = async (req, res) => { 
+    
+}
+
 
 module.exports = {
 	register,
