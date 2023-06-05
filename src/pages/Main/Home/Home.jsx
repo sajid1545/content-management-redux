@@ -28,16 +28,11 @@ const Home = () => {
 	const uploadFilters = useSelector((state) => state.filter.filters.uploadFilters);
 	const loading = useSelector((state) => state.content.loading);
 	const tagFilters = useSelector((state) => state.filter.filters.tagFilters);
-	const userID = useSelector((state) => state.user.auth.uid);
+	// const userID = useSelector((state) => state.user.auth.uid);
 
 	useEffect(() => {
 		dispatch(getContentData());
-
-		if (!userID) {
-			localStorage.removeItem('user-token');
-		}
-
-	}, [dispatch, uploadFilters,userID]);
+	}, [dispatch, uploadFilters]);
 
 	if (loading === true) {
 		content = (

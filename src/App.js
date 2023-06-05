@@ -1,15 +1,21 @@
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import './App.css';
 import { route } from './Routes/Routes/Routes';
-import { Provider } from 'react-redux';
-import store from './redux/store/store';
 
 function App() {
+	const userID = useSelector((state) => state.user.auth.uid);
+
+	useEffect(() => {
+		if (!userID) {
+			localStorage.removeItem('user-token');
+		}
+	}, [userID]);
+
 	return (
 		<div className="">
-			<Provider store={store}>
-				<RouterProvider router={route} />
-			</Provider>
+			<RouterProvider router={route} />
 		</div>
 	);
 }
