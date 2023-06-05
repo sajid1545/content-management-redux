@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 	const [isToggleOpen, setIsToggleOpen] = useState(false);
+
+	const userID = useSelector((state) => state.user.auth.uid);
 
 	return (
 		<>
@@ -70,14 +73,25 @@ const Navbar = () => {
 									Reading History
 								</Link>
 							</li>
-							<li role="none" className="flex items-stretch">
-								<Link
-									onClick={() => setIsToggleOpen(false)}
-									to={'/dashboard'}
-									className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none lg:px-7">
-									Dashboard
-								</Link>
-							</li>
+							{userID ? (
+								<li role="none" className="flex items-stretch">
+									<Link
+										onClick={() => setIsToggleOpen(false)}
+										to={'/dashboard'}
+										className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none lg:px-7">
+										Dashboard
+									</Link>
+								</li>
+							) : (
+								<li role="none" className="flex items-stretch">
+									<Link
+										// onClick={() => setIsToggleOpen(false)}
+										to={'/login'}
+										className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none lg:px-7">
+										Login
+									</Link>
+								</li>
+							)}
 						</ul>
 					</nav>
 				</div>

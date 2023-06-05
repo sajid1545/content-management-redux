@@ -9,6 +9,7 @@ import Login from '../../pages/Main/Auth/Login/Login';
 import Register from '../../pages/Main/Auth/Register/Register';
 import Home from '../../pages/Main/Home/Home';
 import ReadingHistory from '../../pages/Main/ReadingHistory/ReadingHistory';
+import AdminRoute from '../AdminRoute/AdminRoute';
 
 export const route = createBrowserRouter([
 	{
@@ -41,16 +42,28 @@ export const route = createBrowserRouter([
 		errorElement: <ErrorPage />,
 		children: [
 			{
-				path: '/dashboard',
-				element: <ContentList />,
+				path: '/dashboard/content-list',
+				element: (
+					<AdminRoute>
+						<ContentList />,
+					</AdminRoute>
+				),
 			},
 			{
 				path: '/dashboard/add-content',
-				element: <AddContent />,
+				element: (
+					<AdminRoute>
+						<AddContent />,
+					</AdminRoute>
+				),
 			},
 			{
 				path: '/dashboard/edit-content',
-				element: <EditContent />,
+				element: (
+					<AdminRoute>
+						<EditContent />,
+					</AdminRoute>
+				),
 			},
 		],
 	},

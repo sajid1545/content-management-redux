@@ -28,15 +28,21 @@ const Home = () => {
 	const uploadFilters = useSelector((state) => state.filter.filters.uploadFilters);
 	const loading = useSelector((state) => state.content.loading);
 	const tagFilters = useSelector((state) => state.filter.filters.tagFilters);
+	const userID = useSelector((state) => state.user.auth.uid);
 
 	useEffect(() => {
 		dispatch(getContentData());
-	}, [dispatch, uploadFilters]);
+
+		if (!userID) {
+			localStorage.removeItem('user-token');
+		}
+
+	}, [dispatch, uploadFilters,userID]);
 
 	if (loading === true) {
 		content = (
 			<div className="h-screen flex justify-center items-center">
-				<div class="spinner place-items-center"></div>
+				<div className="spinner place-items-center"></div>
 			</div>
 		);
 	}
