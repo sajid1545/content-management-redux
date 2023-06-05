@@ -9,7 +9,7 @@ const AdminRoute = ({ children }) => {
 
 	const user = useSelector((state) => state.user.auth);
 
-	const role = useSelector((state) => state.user.auth.role);
+	const role = useSelector((state) => state.user.auth?.role);
 
 	if (loginLoader) {
 		return <div>Loading...</div>;

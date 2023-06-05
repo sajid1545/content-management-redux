@@ -1,4 +1,4 @@
-import { ADD_USER, TOGGLE_LOGIN_LOADING } from '../actionTypes/actionTypes';
+import { ADD_USER, LOAD_USER, TOGGLE_LOGIN_LOADING } from '../actionTypes/actionTypes';
 
 const initialState = {
 	auth: {},
@@ -7,6 +7,13 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
 	switch (action.type) {
+		case LOAD_USER: {
+			return {
+				...state,
+				auth: action.payload,
+			};
+		}
+
 		case ADD_USER:
 			return {
 				...state,

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
 	const [isToggleOpen, setIsToggleOpen] = useState(false);
 
-	const userID = useSelector((state) => state.user.auth.uid);
+	const userID = useSelector((state) => state.user?.auth.uid);
 
 	return (
 		<>
@@ -18,14 +18,16 @@ const Navbar = () => {
 						role="navigation">
 						{/*      <!-- Brand logo --> */}
 
-						<div className="flex items-center gap-2">
-							<img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB8HTRAElaqtDMcPJnmXwSvVj0x-twWUraeOR9yd9J4PuENdliXCbhuSiWbtYU5RulPG4&usqp=CAU"
-								alt=""
-								className="w-[70px] h-[70px] rounded-full"
-							/>
-							<p className="text-emerald-500 font-extrabold text-xl">Content System</p>
-						</div>
+						<Link to={'/'} >
+							<div className="flex items-center gap-2">
+								<img
+									src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB8HTRAElaqtDMcPJnmXwSvVj0x-twWUraeOR9yd9J4PuENdliXCbhuSiWbtYU5RulPG4&usqp=CAU"
+									alt=""
+									className="w-[70px] h-[70px] rounded-full"
+								/>
+								<p className="text-emerald-500 font-extrabold text-xl">Content System</p>
+							</div>
+						</Link>
 						{/*      <!-- Mobile trigger --> */}
 						<button
 							className={`relative order-10 block h-10 w-10 self-center lg:hidden

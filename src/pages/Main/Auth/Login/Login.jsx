@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { addUser, toggleLoginLoading } from '../../../../redux/actions/userAction';
 import { baseURL } from './../../../../baseURL';
 
@@ -40,6 +40,7 @@ const Login = () => {
 				dispatch(addUser(response.data.data));
 				navigate(from, { replace: true });
 				dispatch(toggleLoginLoading(false));
+				localStorage.setItem('user', JSON.stringify(response.data));
 				return localStorage.setItem('user-token', response.data.token);
 			}
 		} catch (error) {
@@ -83,6 +84,15 @@ const Login = () => {
 						{loginLoader ? <span>Loading...</span> : 'Sign In'}
 					</button>
 				</form>
+				<h1 className="mb-1 text-xl font-medium text-center text-gray-800 md:text-3xl">
+					Create your Free Account
+				</h1>
+				<p className="mb-2 text-sm font-normal text-center text-gray-700 md:text-base">
+					Don't have an account?
+					<Link to="/register" className="text-purple-700 hover:text-purple-900">
+						Sign up
+					</Link>
+				</p>
 			</div>
 		</section>
 	);
