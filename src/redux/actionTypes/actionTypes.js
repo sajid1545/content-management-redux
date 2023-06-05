@@ -11,3 +11,10 @@ export const ADD_TO_HISTORY_CART = "ADD_TO_HISTORY_CART"
 
 export const TOGGLE_UPLOAD = 'TOGGLE_UPLOAD';
 export const TOGGLE_TAG = 'TOGGLE_TAG';
+
+
+// users
+
+export const TOGGLE_LOGIN_LOADING = 'TOGGLE_LOGIN_LOADING';
+export const ADD_USER = "ADD_USER"
+export const LOGOUT = "LOGOUT"
