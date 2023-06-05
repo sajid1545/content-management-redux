@@ -1,16 +1,37 @@
+import axios from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
+import { baseURL } from './../../../../baseURL';
 
 const Register = () => {
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm();
 
-	const signUp = (data) => {
-		console.log(data);
+	const navigate = useNavigate();
+
+	const signUp = async (data) => {
+		const { name, email, password } = data;
+
+		try {
+			const response = await axios.post(
+				`${baseURL}/api/v1/auth/register`,
+				JSON.stringify({ name, email, password }),
+				{ headers: { 'Content-type': 'application/json' } }
+			);
+			toast.success(response.data.message);
+			console.log(response.data);
+			navigate('/login');
+			reset();
+		} catch (error) {
+			console.log(error);
+			toast.error(error.response.data);
+		}
 	};
 
 	return (
