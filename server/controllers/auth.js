@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const { v5: uuidv5 } = require('uuid');
+const jwt = require('jsonwebtoken');
 
 const register = async (req, res) => {
 	const { name, email, password } = req.body;
@@ -30,12 +31,28 @@ const register = async (req, res) => {
 	}
 };
 
+const login = async (req, res) => {
+	const { email, password } = req.body;
 
-const login = async (req, res) => { 
-    
-}
+	const foundUser = await User.findOne({ email });
+	console.log('Found User', foundUser);
+	if (!foundUser) return res.status(400).send('Email or password is incorrect');
 
+	const match = await bcrypt.compare(password, foundUser.password);
+	if (match) {
+		const access_token = jwt.sign({ foundUser }, process.env.SECRET_ACCESS_TOKEN, {
+			expiresIn: '1d',
+		});
+
+		return res
+			.status(200)
+			.send({ message: 'Login successful!', token: access_token, data: foundUser });
+	} else {
+		return res.status(400).send('Password is incorrect');
+	}
+};
 
 module.exports = {
 	register,
+	login,
 };
