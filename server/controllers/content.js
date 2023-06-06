@@ -4,10 +4,10 @@ const addContent = async (req, res) => {
 	try {
 		const content = req.body;
 		const result = await Content.create(content);
-		res.send({ status: 'success', result });
+		res.status(200).send({ status: 'success', message: 'Content updated successfully', result });
 	} catch (error) {
 		console.log(error);
-		res.send({ status: 'error', error: error.message });
+		res.status(400).send({ status: 'error', error: error.message });
 	}
 };
 
@@ -38,7 +38,7 @@ const updateContent = async (req, res) => {
 		const id = req.params.id;
 		const content = req.body;
 		const result = await Content.findByIdAndUpdate(id, content);
-		res.send({ status: 'success', result });
+		res.send({ status: 'success', message: 'Content updated successfully', result });
 	} catch (error) {
 		console.log(error);
 		res.send({ status: 'error', error: error.message });
@@ -60,5 +60,5 @@ module.exports = {
 	addContent,
 	getContents,
 	updateContent,
-	deleteContent
+	deleteContent,
 };

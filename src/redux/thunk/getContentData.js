@@ -6,7 +6,11 @@ const getContentData = () => {
 		dispatch(toggleLoading(true));
 		const uploadFilters = getState().filter.filters.uploadFilters;
 
-		const res = await fetch(`${baseURL}/api/v1/content?sort=${uploadFilters}`);
+		const res = await fetch(`${baseURL}/api/v1/content?sort=${uploadFilters}`, {
+			headers: {
+				authorization: `Bearer ${localStorage.getItem('user-token')}`,
+			},
+		});
 		const data = await res.json();
 
 		if (data.data.length) {

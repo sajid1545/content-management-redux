@@ -1,20 +1,23 @@
+import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { addContent } from '../actions/contentActions';
 import { baseURL } from './../../baseURL';
 
 const addContentData = (content) => {
 	return async (dispatch, getState) => {
-		const res = await fetch(`${baseURL}/api/v1/content`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(content),
-		});
+		try {
+			const res = await axios.post(`${baseURL}/api/v1/content`, content, {
+				headers: {
+					'Content-Type': 'application/json',
+					authorization: `Bearer ${localStorage.getItem('user-token')}`,
+				},
+			});
 
-		const data = await res.json();
-
-		if (data.status === 'success') {
-			toast.success(data.status);
-			dispatch(addContent(data.result));
+			console.log(res);
+			toast.success(res.data.message);
+			dispatch(addContent(res.data.result));
+		} catch (error) {
+			toast.error(error.response.data.message);
 		}
 	};
 };
