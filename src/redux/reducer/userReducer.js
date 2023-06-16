@@ -1,4 +1,4 @@
-import { ADD_USER, LOAD_USER, TOGGLE_LOGIN_LOADING } from '../actionTypes/actionTypes';
+import { ADD_USER, LOAD_USER, LOGOUT, TOGGLE_LOGIN_LOADING } from '../actionTypes/actionTypes';
 
 const initialState = {
 	auth: {},
@@ -24,6 +24,12 @@ const userReducer = (state = initialState, action) => {
 			return {
 				...state,
 				loginLoading: action.payload,
+			};
+
+		case LOGOUT:
+			return {
+				...state,
+				auth: {},
 			};
 
 		default:

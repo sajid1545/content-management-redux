@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import './App.css';
 import { route } from './Routes/Routes/Routes';
+import { addUser } from './redux/actions/userAction';
 
 function App() {
 	const userID = useSelector((state) => state.user?.auth?.uid);
@@ -11,11 +12,10 @@ function App() {
 
 	useEffect(() => {
 		const localStorageUser = localStorage.getItem('user');
-		const user = JSON.parse(localStorageUser);
-
-		if (!userID) {
-			localStorage.removeItem('user-token');
-			localStorage.removeItem('user');
+		if (localStorageUser) {
+			const user = JSON.parse(localStorageUser);
+			const userData = user?.data;
+			dispatch(addUser(userData));
 		}
 	}, [userID, dispatch, loginLoader]);
 

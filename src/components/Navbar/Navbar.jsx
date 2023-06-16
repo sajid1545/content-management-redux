@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logOut } from '../../redux/actions/userAction';
 
 const Navbar = () => {
 	const [isToggleOpen, setIsToggleOpen] = useState(false);
 
 	const userID = useSelector((state) => state.user?.auth.uid);
+	const dispatch = useDispatch();
+
+	const handleLogout = () => {
+		setIsToggleOpen(false);
+		dispatch(logOut());
+		localStorage.removeItem('user-token');
+		localStorage.removeItem('user');
+	};
 
 	return (
 		<>
@@ -18,7 +27,7 @@ const Navbar = () => {
 						role="navigation">
 						{/*      <!-- Brand logo --> */}
 
-						<Link to={'/'} >
+						<Link to={'/'}>
 							<div className="flex items-center gap-2">
 								<img
 									src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB8HTRAElaqtDMcPJnmXwSvVj0x-twWUraeOR9yd9J4PuENdliXCbhuSiWbtYU5RulPG4&usqp=CAU"
@@ -87,8 +96,7 @@ const Navbar = () => {
 									</li>
 									<li role="none" className="flex items-stretch">
 										<Link
-											onClick={() => setIsToggleOpen(false)}
-											to={'/dashboard'}
+											onClick={handleLogout}
 											className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none lg:px-7">
 											Logout
 										</Link>
@@ -97,7 +105,7 @@ const Navbar = () => {
 							) : (
 								<li role="none" className="flex items-stretch">
 									<Link
-										onClick={() => setIsToggleOpen(false)}
+										// onClick={() => }
 										to={'/login'}
 										className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none lg:px-7">
 										Login
