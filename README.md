@@ -1,1 +1,1 @@
-Content Management using **`Redux`**
+Content Management using **`Redux Toolkit`**
