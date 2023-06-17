@@ -32,7 +32,6 @@ const Login = () => {
 			localStorage.setItem('user-token', data.token);
 			dispatch(setUser(data?.data));
 		}
-		console.log(data);
 	}, [isError, isSuccess, error, data, dispatch]);
 
 	const signIn = async (data) => {
@@ -44,27 +43,6 @@ const Login = () => {
 		};
 
 		loginUser(userData);
-
-		// try {
-		// 	const response = await axios.post(
-		// 		`${baseURL}/api/v1/auth/login`,
-		// 		JSON.stringify({ email, password }),
-		// 		{
-		// 			headers: { 'Content-type': 'application/json' },
-		// 		}
-		// 	);
-		// 	console.log(response.data);
-		// 	if (response.data.token) {
-		// 		toast.success(response.data.message);
-		// 		reset();
-		// 		navigate(from, { replace: true });
-		// 		localStorage.setItem('user', JSON.stringify(response.data));
-		// 		return localStorage.setItem('user-token', response.data.token);
-		// 	}
-		// } catch (error) {
-		// 	console.log(error);
-		// 	toast.error(error.response.data);
-		// }
 	};
 
 	return (

@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logOut } from '../../features/auth/authSlice';
 
 const Navbar = () => {
 	const [isToggleOpen, setIsToggleOpen] = useState(false);
 
 	const dispatch = useDispatch();
 
-	// const handleLogout = () => {
-	// 	setIsToggleOpen(false);
-	// 	dispatch(logOut());
-	// 	localStorage.removeItem('user-token');
-	// 	localStorage.removeItem('user');
-	// };
+	const loggedInUser = useSelector((state) => state.auth.user);
+	const { email, role } = loggedInUser;
+
+	const handleLogout = () => {
+		setIsToggleOpen(false);
+		dispatch(logOut());
+		localStorage.removeItem('user-token');
+		localStorage.removeItem('user');
+	};
 
 	return (
 		<>
@@ -82,16 +86,20 @@ const Navbar = () => {
 									Reading History
 								</Link>
 							</li>
-							{/* {userID ? (
+
+							{email && role === 'admin' && (
+								<li role="none" className="flex items-stretch">
+									<Link
+										onClick={() => setIsToggleOpen(false)}
+										to={'/dashboard'}
+										className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none lg:px-7">
+										Dashboard
+									</Link>
+								</li>
+							)}
+
+							{email ? (
 								<>
-									<li role="none" className="flex items-stretch">
-										<Link
-											onClick={() => setIsToggleOpen(false)}
-											to={'/dashboard'}
-											className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none lg:px-7">
-											Dashboard
-										</Link>
-									</li>
 									<li role="none" className="flex items-stretch">
 										<Link
 											onClick={handleLogout}
@@ -109,7 +117,7 @@ const Navbar = () => {
 										Login
 									</Link>
 								</li>
-							)} */}
+							)}
 						</ul>
 					</nav>
 				</div>
