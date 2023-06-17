@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logOut } from '../../redux/actions/userAction';
 
 const Navbar = () => {
 	const [isToggleOpen, setIsToggleOpen] = useState(false);
 
-	const userID = useSelector((state) => state.user?.auth.uid);
 	const dispatch = useDispatch();
 
-	const handleLogout = () => {
-		setIsToggleOpen(false);
-		dispatch(logOut());
-		localStorage.removeItem('user-token');
-		localStorage.removeItem('user');
-	};
+	// const handleLogout = () => {
+	// 	setIsToggleOpen(false);
+	// 	dispatch(logOut());
+	// 	localStorage.removeItem('user-token');
+	// 	localStorage.removeItem('user');
+	// };
 
 	return (
 		<>
@@ -84,7 +82,7 @@ const Navbar = () => {
 									Reading History
 								</Link>
 							</li>
-							{userID ? (
+							{/* {userID ? (
 								<>
 									<li role="none" className="flex items-stretch">
 										<Link
@@ -111,7 +109,7 @@ const Navbar = () => {
 										Login
 									</Link>
 								</li>
-							)}
+							)} */}
 						</ul>
 					</nav>
 				</div>

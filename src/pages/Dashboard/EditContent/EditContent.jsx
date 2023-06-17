@@ -1,11 +1,7 @@
-import Autocomplete from '@mui/material/Autocomplete';
-import Chip from '@mui/material/Chip';
-import TextField from '@mui/material/TextField';
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import updateContentData from '../../../redux/thunk/updateContentData';
 
 const EditContent = () => {
 	const { register, handleSubmit, reset } = useForm();
@@ -13,27 +9,27 @@ const EditContent = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const contentID = location.state._id;
-	const contents = useSelector((state) => state.content.contents);
+	// const contents = useSelector((state) => state.content.contents);
 
-    const editableContent = contents.find((content) => content._id === contentID);
+    // const editableContent = contents.find((content) => content._id === contentID);
     
-	const { title, image, tags, description, _id } = editableContent;
+	// const { title, image, tags, description, _id } = editableContent;
 
-	const [newTags, setNewTags] = useState(tags);
+	// const [newTags, setNewTags] = useState(tags);
 
-	const submit = (data) => {
-		const contentData = {
-			title: data.title,
-			image: data.image,
-			description: data.description,
-			tags: newTags,
-		};
-		dispatch(updateContentData(contentData, _id));
-	};
+	// const submit = (data) => {
+	// 	const contentData = {
+	// 		title: data.title,
+	// 		image: data.image,
+	// 		description: data.description,
+	// 		tags: newTags,
+	// 	};
+	// 	dispatch(updateContentData(contentData, _id));
+	// };
 
 	return (
 		<div className="flex justify-center items-center h-full">
-			<form
+			{/* <form
 				onSubmit={handleSubmit(submit)}
 				className="shadow-lg p-10 rounded-md flex flex-wrap gap-3 w-full  max-w-5xl justify-between bg-white">
 				<div className="flex flex-col w-full">
@@ -94,7 +90,7 @@ const EditContent = () => {
 						Submit
 					</button>
 				</div>
-			</form>
+			</form> */}
 		</div>
 	);
 };

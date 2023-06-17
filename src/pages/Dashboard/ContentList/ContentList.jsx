@@ -1,21 +1,14 @@
-import { Tooltip } from '@mui/material';
-import { format } from 'date-fns';
-import React, { useEffect } from 'react';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { BsFillTrashFill } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import deleteContentData from '../../../redux/thunk/deleteContentData';
-import getContentData from '../../../redux/thunk/getContentData';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
 const ContentList = () => {
 	const dispatch = useDispatch();
 
-	const contents = useSelector((state) => state.content.contents);
+	// const contents = useSelector((state) => state.content.contents);
 
-	useEffect(() => {
-		dispatch(getContentData());
-	}, [dispatch]);
+	// useEffect(() => {
+	// 	dispatch(getContentData());
+	// }, [dispatch]);
 
 	return (
 		<div className="flex flex-col justify-center items-center h-full w-full">
@@ -47,7 +40,7 @@ const ContentList = () => {
 									Action
 								</th>
 							</tr>
-							{contents.map((content) => {
+							{/* {contents.map((content) => {
 								const { image, title, createdAt, _id } = content;
 								const formattedDate = format(new Date(createdAt), 'PPpp');
 								return (
@@ -84,7 +77,7 @@ const ContentList = () => {
 										</td>
 									</tr>
 								);
-							})}
+							})} */}
 						</tbody>
 					</table>
 				</div>

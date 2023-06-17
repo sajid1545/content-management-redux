@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import addContentData from '../../../redux/thunk/addContentData';
 
 const AddContent = () => {
 	const { register, handleSubmit, reset } = useForm();
@@ -20,7 +19,7 @@ const AddContent = () => {
 			description: data.description,
 			tags,
 		};
-		dispatch(addContentData(contentData));
+		// dispatch(addContentData(contentData));
 		reset();
 	};
 

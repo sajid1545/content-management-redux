@@ -2,9 +2,8 @@ import axios from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { addUser, toggleLoginLoading } from '../../../../redux/actions/userAction';
 import { baseURL } from './../../../../baseURL';
 
 const Login = () => {
@@ -19,12 +18,11 @@ const Login = () => {
 	const navigate = useNavigate();
 	let from = location.state?.from?.pathname || '/';
 
-	const loginLoader = useSelector((state) => state.user.loginLoading);
 	const dispatch = useDispatch();
 
 	const signIn = async (data) => {
 		const { email, password } = data;
-		dispatch(toggleLoginLoading(true));
+		// dispatch(toggleLoginLoading(true));
 		try {
 			const response = await axios.post(
 				`${baseURL}/api/v1/auth/login`,
@@ -37,16 +35,13 @@ const Login = () => {
 			if (response.data.token) {
 				toast.success(response.data.message);
 				reset();
-				dispatch(addUser(response.data.data));
 				navigate(from, { replace: true });
-				dispatch(toggleLoginLoading(false));
 				localStorage.setItem('user', JSON.stringify(response.data));
 				return localStorage.setItem('user-token', response.data.token);
 			}
 		} catch (error) {
 			console.log(error);
 			toast.error(error.response.data);
-			dispatch(toggleLoginLoading(false));
 		}
 	};
 
@@ -81,7 +76,7 @@ const Login = () => {
 					<button
 						type="submit"
 						className="w-full py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white  transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-						{loginLoader ? <span>Loading...</span> : 'Sign In'}
+						{/* {loginLoader ? <span>Loading...</span> : 'Sign In'} */}
 					</button>
 				</form>
 				<h1 className="mb-1 text-xl font-medium text-center text-gray-800 md:text-3xl">
