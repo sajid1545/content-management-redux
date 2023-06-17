@@ -38,10 +38,10 @@ const Home = () => {
 		content = contents.map((content) => <ContentCard key={content._id} content={content} />);
 	}
 
-	if (contents.length && tagFilters.length) {
+	if (contents?.length && tagFilters?.length) {
 		content = contents
 			.filter((content) => {
-				if (tagFilters.length) {
+				if (tagFilters?.length) {
 					return tagFilters.every((tag) => content.tags.includes(tag));
 				}
 				return content;

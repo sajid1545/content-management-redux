@@ -1,8 +1,9 @@
 import { Tooltip } from '@mui/material';
 import { format } from 'date-fns';
 import React from 'react';
+import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleTagFilters } from '../../features/content/contentSlice';
+import { addToHistoryCart, toggleTagFilters } from '../../features/content/contentSlice';
 
 const ContentCard = ({ content }) => {
 	const { title, image, description, tags, createdAt } = content;
@@ -47,10 +48,10 @@ const ContentCard = ({ content }) => {
 						<span>
 							<Tooltip title="Add to reading History by clicking on this button" arrow>
 								<button
-									// onClick={() => {
-									// 	dispatch(addToHistoryCart(content));
-									// 	toast.success(`${title} read`);
-									// }}
+									onClick={() => {
+										dispatch(addToHistoryCart(content));
+										toast.success(`${title} read`);
+									}}
 									className="bg-indigo-700 border-2 border-indigo-700 p-1 rounded-md mt-5 w-full text-white font-bold text-md hover:bg-white hover:text-black duration-500">
 									Read more
 								</button>
