@@ -15,8 +15,23 @@ const Register = () => {
 
 	const navigate = useNavigate();
 
+	// const [addUser, { isLoading, isError, isSuccess, error}] = useRegisterMutation();
+
+	// useEffect(() => {
+	// 	if (isError) {
+	// 		toast.error(error);
+	// 	}
+	// }, [isError, error]);
+
 	const signUp = async (data) => {
 		const { name, email, password } = data;
+		const userData = {
+			name,
+			email,
+			password,
+		};
+
+		// addUser(userData);
 
 		try {
 			const response = await axios.post(
@@ -82,7 +97,8 @@ const Register = () => {
 					<button
 						type="submit"
 						className="w-full py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white  transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-						Sign Up
+						{/* {isLoading ? 'Loading...' : 'SignUp'} */}
+						Signup
 					</button>
 				</form>
 
