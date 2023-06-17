@@ -20,15 +20,13 @@ const Register = () => {
 	const [addUser, { isLoading, isError, isSuccess, error, data }] = useRegisterMutation();
 
 	useEffect(() => {
-		if (isError) {
-			toast.error(error);
-		}
 		if (isSuccess) {
 			toast.success(data.message);
 			navigate('/login');
-		}
-		if (data) {
 			dispatch(setUser(data?.result));
+		}
+		if (isError) {
+			toast.error(error.data);
 		}
 	}, [isError, isSuccess, error, data, dispatch]);
 
@@ -41,8 +39,6 @@ const Register = () => {
 		};
 
 		addUser(userData);
-
-		
 	};
 
 	return (

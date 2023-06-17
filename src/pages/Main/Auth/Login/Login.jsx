@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
@@ -22,15 +23,19 @@ const Login = () => {
 	const [loginUser, { isLoading, isError, isSuccess, error, data }] = useLoginMutation();
 
 	useEffect(() => {
-		if (isError) {
-			toast.error(error);
-		}
 		if (isSuccess) {
 			toast.success(data.message);
 			navigate(from, { replace: true });
-			localStorage.setItem('user', JSON.stringify(data.data));
-			localStorage.setItem('user-token', data.token);
+
+			// storing in cookies
+			Cookies.set('user', JSON.stringify(data.data));
+			Cookies.set('user-token', data.token);
+
 			dispatch(setUser(data?.data));
+		}
+
+		if (isError) {
+			toast.error(error.data);
 		}
 	}, [isError, isSuccess, error, data, dispatch]);
 

@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
@@ -9,9 +10,10 @@ function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const localStorageUser = localStorage.getItem('user');
-		if (localStorageUser) {
-			const user = JSON.parse(localStorageUser);
+		const data = Cookies.get('user');
+		if (data) {
+			const user = JSON.parse(data);
+			console.log(user);
 			dispatch(setUser(user));
 		}
 	}, [dispatch]);
