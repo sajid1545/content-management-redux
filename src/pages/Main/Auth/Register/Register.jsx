@@ -1,9 +1,10 @@
-import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { baseURL } from './../../../../baseURL';
+import { useRegisterMutation } from '../../../../features/auth/authApi';
+import { setUser } from '../../../../features/auth/authSlice';
 
 const Register = () => {
 	const {
@@ -14,14 +15,22 @@ const Register = () => {
 	} = useForm();
 
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
-	// const [addUser, { isLoading, isError, isSuccess, error}] = useRegisterMutation();
+	const [addUser, { isLoading, isError, isSuccess, error, data }] = useRegisterMutation();
 
-	// useEffect(() => {
-	// 	if (isError) {
-	// 		toast.error(error);
-	// 	}
-	// }, [isError, error]);
+	useEffect(() => {
+		if (isError) {
+			toast.error(error);
+		}
+		if (isSuccess) {
+			toast.success(data.message);
+			navigate('/login');
+		}
+		if (data) {
+			dispatch(setUser(data?.result));
+		}
+	}, [isError, isSuccess, error, data, dispatch]);
 
 	const signUp = async (data) => {
 		const { name, email, password } = data;
@@ -31,22 +40,9 @@ const Register = () => {
 			password,
 		};
 
-		// addUser(userData);
+		addUser(userData);
 
-		try {
-			const response = await axios.post(
-				`${baseURL}/api/v1/auth/register`,
-				JSON.stringify({ name, email, password }),
-				{ headers: { 'Content-type': 'application/json' } }
-			);
-			toast.success(response.data.message);
-			console.log(response.data);
-			navigate('/login');
-			reset();
-		} catch (error) {
-			console.log(error);
-			toast.error(error.response.data);
-		}
+		
 	};
 
 	return (
@@ -97,8 +93,7 @@ const Register = () => {
 					<button
 						type="submit"
 						className="w-full py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white  transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-						{/* {isLoading ? 'Loading...' : 'SignUp'} */}
-						Signup
+						{isLoading ? 'Loading...' : 'SignUp'}
 					</button>
 				</form>
 

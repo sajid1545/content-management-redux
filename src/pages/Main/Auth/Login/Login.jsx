@@ -1,10 +1,10 @@
-import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { baseURL } from './../../../../baseURL';
+import { useLoginMutation } from '../../../../features/auth/authApi';
+import { setUser } from '../../../../features/auth/authSlice';
 
 const Login = () => {
 	const {
@@ -17,32 +17,54 @@ const Login = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	let from = location.state?.from?.pathname || '/';
-
 	const dispatch = useDispatch();
+
+	const [loginUser, { isLoading, isError, isSuccess, error, data }] = useLoginMutation();
+
+	useEffect(() => {
+		if (isError) {
+			toast.error(error);
+		}
+		if (isSuccess) {
+			toast.success(data.message);
+			navigate(from, { replace: true });
+			localStorage.setItem('user', JSON.stringify(data.data));
+			localStorage.setItem('user-token', data.token);
+			dispatch(setUser(data?.data));
+		}
+		console.log(data);
+	}, [isError, isSuccess, error, data, dispatch]);
 
 	const signIn = async (data) => {
 		const { email, password } = data;
-		// dispatch(toggleLoginLoading(true));
-		try {
-			const response = await axios.post(
-				`${baseURL}/api/v1/auth/login`,
-				JSON.stringify({ email, password }),
-				{
-					headers: { 'Content-type': 'application/json' },
-				}
-			);
-			console.log(response.data);
-			if (response.data.token) {
-				toast.success(response.data.message);
-				reset();
-				navigate(from, { replace: true });
-				localStorage.setItem('user', JSON.stringify(response.data));
-				return localStorage.setItem('user-token', response.data.token);
-			}
-		} catch (error) {
-			console.log(error);
-			toast.error(error.response.data);
-		}
+
+		const userData = {
+			email,
+			password,
+		};
+
+		loginUser(userData);
+
+		// try {
+		// 	const response = await axios.post(
+		// 		`${baseURL}/api/v1/auth/login`,
+		// 		JSON.stringify({ email, password }),
+		// 		{
+		// 			headers: { 'Content-type': 'application/json' },
+		// 		}
+		// 	);
+		// 	console.log(response.data);
+		// 	if (response.data.token) {
+		// 		toast.success(response.data.message);
+		// 		reset();
+		// 		navigate(from, { replace: true });
+		// 		localStorage.setItem('user', JSON.stringify(response.data));
+		// 		return localStorage.setItem('user-token', response.data.token);
+		// 	}
+		// } catch (error) {
+		// 	console.log(error);
+		// 	toast.error(error.response.data);
+		// }
 	};
 
 	return (
@@ -76,7 +98,7 @@ const Login = () => {
 					<button
 						type="submit"
 						className="w-full py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white  transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-						{/* {loginLoader ? <span>Loading...</span> : 'Sign In'} */}
+						{isLoading ? <span>Loading...</span> : 'Sign In'}
 					</button>
 				</form>
 				<h1 className="mb-1 text-xl font-medium text-center text-gray-800 md:text-3xl">
