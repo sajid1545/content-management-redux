@@ -4,7 +4,7 @@ const verifyToken = require('../middlewares/verifyToken');
 const router = express.Router();
 
 router.get('/', getContents);
-router.post('/', verifyToken, addContent);
+router.post('/', addContent);
 router.patch('/:id', updateContent);
 router.delete('/:id', deleteContent);
 

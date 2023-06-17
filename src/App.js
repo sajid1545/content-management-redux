@@ -13,7 +13,6 @@ function App() {
 		const data = Cookies.get('user');
 		if (data) {
 			const user = JSON.parse(data);
-			console.log(user);
 			dispatch(setUser(user));
 		}
 	}, [dispatch]);

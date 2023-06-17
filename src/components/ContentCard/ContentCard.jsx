@@ -1,7 +1,8 @@
 import { Tooltip } from '@mui/material';
 import { format } from 'date-fns';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleTagFilters } from '../../features/content/contentSlice';
 
 const ContentCard = ({ content }) => {
 	const { title, image, description, tags, createdAt } = content;
@@ -10,7 +11,7 @@ const ContentCard = ({ content }) => {
 	const addedDate = format(new Date(createdAt), 'PPpp');
 	const dispatch = useDispatch();
 
-	// const tagFilters = useSelector((state) => state.filter.filters.tagFilters);
+	const tagFilters = useSelector((state) => state.content.tagFilters);
 
 	return (
 		<div>
@@ -24,18 +25,18 @@ const ContentCard = ({ content }) => {
 					<header className="mb-4">
 						<h3 className="text-xl font-medium text-slate-700">{title}</h3>
 						<p className="text-sm text-slate-500"> {addedDate}</p>
-						{/* <div className="space-x-4 my-4 flex flex-wrap">
+						<div className="space-x-4 my-4 flex flex-wrap">
 							{tags.map((tag, idx) => (
 								<button
 									key={idx}
-									onClick={() => dispatch(toggleTag(tag))}
+									onClick={() => dispatch(toggleTagFilters(tag))}
 									className={`whitespace-nowrap rounded-full border px-2.5 py-0.5 text-sm ${
 										tagFilters.includes(tag) ? activeClass : ''
 									}`}>
 									{tag}
 								</button>
 							))}
-						</div> */}
+						</div>
 					</header>
 					<p className="">
 						<span className="w-[70%]">
